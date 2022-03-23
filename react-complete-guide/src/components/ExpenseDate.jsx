@@ -1,6 +1,9 @@
 import React from 'react'
 
-const ExpenseDate = ({ day, month, year }) => {
+const ExpenseDate = ({ date }) => {
+  const month = date.toLocaleString('en-GB', { month: 'long' })
+  const day = date.toLocaleString('en-GB', { day: '2-digit' })
+  const year = date.getFullYear()
   return (
     <div>
       <div>{month}</div>
