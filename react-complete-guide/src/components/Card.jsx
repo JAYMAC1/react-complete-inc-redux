@@ -1,7 +1,9 @@
 import React from 'react'
 import './Card.css'
-const Card = ({ children }) => {
-  return <div className='card'>{children}</div>
+const Card = ({ children, className }) => {
+  const classes = 'card ' + className
+  console.log(className)
+  return <div className={classes}>{children}</div>
 }
 
 export default Card
