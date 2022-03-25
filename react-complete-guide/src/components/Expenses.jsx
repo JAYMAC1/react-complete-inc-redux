@@ -1,14 +1,15 @@
+import Card from './Card'
 import ExpenseItem from './ExpenseItem'
 import './Expenses.css'
 
 const Expenses = ({ expenses }) => {
   return (
-    <div>
+    <Card className='expenses'>
       {expenses.length > 0 &&
         expenses.map((expense) => (
           <ExpenseItem key={expense.id} expense={expense} />
         ))}
-    </div>
+    </Card>
   )
 }
 
