@@ -1,32 +1,61 @@
 import React, { useState } from 'react'
 import './ExpenseForm.css'
 const ExpenseForm = () => {
-  const [enteredTitle, setEnteredTitle] = useState('')
-  const [enteredAmount, setEnteredAmount] = useState('')
-  const [enteredDate, setEnteredDate] = useState('')
+  // const [enteredTitle, setEnteredTitle] = useState('')
+  // const [enteredAmount, setEnteredAmount] = useState('')
+  // const [enteredDate, setEnteredDate] = useState('')
 
-  const titleChangeHandler = (e) => {
-    setEnteredTitle(e.target.value)
-  }
-  const amountChangeHandler = (e) => {
-    setEnteredAmount(e.target.value)
-  }
-  const dateChangeHandler = (e) => {
-    setEnteredDate(e.target.value)
-  }
+  const [formData, setFormData] = useState({
+    title: '',
+    amount: '',
+    date: '',
+  })
 
-  const formReset = () => {
-    setEnteredTitle('')
-    setEnteredAmount('')
-    setEnteredDate('')
+  const { title, amount, date } = formData
+
+  const onMutate = (e) => {
+    let boolean = null
+    if (e.target.value === 'true') {
+      boolean = true
+    }
+
+    if (e.target.value === 'false') {
+      boolean = false
+    }
+
+    // Files
+    if (e.target.files) {
+      setFormData((prevState) => ({
+        ...prevState,
+        images: e.target.files,
+      }))
+    }
+
+    // Date
+    if (e.target.id === 'date') {
+      setFormData((prevState) => ({
+        ...prevState,
+        [e.target.id]: e.target.value,
+      }))
+    }
+
+    // Text/Booleans/Numbers
+    if (!e.target.files && e.target.id !== 'date') {
+      setFormData((prevState) => ({
+        ...prevState,
+        [e.target.id]: boolean ?? e.target.value,
+      }))
+    }
   }
 
   const formSubmitHandler = (e) => {
     e.preventDefault()
-    console.log(enteredTitle)
-    console.log(enteredAmount)
-    console.log(enteredDate)
-    formReset()
+    console.log(formData)
+    setFormData({
+      title: '',
+      amount: '',
+      date: '',
+    })
   }
 
   return (
@@ -38,8 +67,8 @@ const ExpenseForm = () => {
             type='text'
             id='title'
             name='title'
-            onChange={titleChangeHandler}
-            value={enteredTitle}
+            onChange={onMutate}
+            value={title}
           />
         </div>
         <div className='new-expense__control'>
@@ -50,8 +79,8 @@ const ExpenseForm = () => {
             name='amount'
             min='0.01'
             step='0.01'
-            onChange={amountChangeHandler}
-            value={enteredAmount}
+            onChange={onMutate}
+            value={amount}
           />
         </div>
         <div className='new-expense__control'>
@@ -62,8 +91,8 @@ const ExpenseForm = () => {
             name='date'
             min='2019-01-01'
             max='2022-12-31'
-            onChange={dateChangeHandler}
-            value={enteredDate}
+            onChange={onMutate}
+            value={date}
           />
         </div>
       </div>
