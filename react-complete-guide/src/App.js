@@ -14,7 +14,7 @@ const App = () => {
       id: 2,
       title: 'Car Fuel',
       amount: 150,
-      date: new Date(2022, 4, 2),
+      date: new Date(2021, 4, 2),
     },
     {
       id: 3,
@@ -22,16 +22,30 @@ const App = () => {
       amount: 330,
       date: new Date(2022, 0, 15),
     },
+    {
+      id: 4,
+      title: 'Spoons',
+      amount: 40,
+      date: new Date(2019, 0, 15),
+    },
   ])
 
   const addExpenseHandler = (expense) => {
     setExpenses((prevState) => [...prevState, expense])
   }
 
+  const filterExpenses = (year) => {
+    const filteredExpenses = expenses.filter((expense) => {
+      return expense.date.getFullYear() == year
+    })
+
+    setExpenses(filteredExpenses)
+  }
+
   return (
     <div>
       <NewExpense addExpenseHandler={addExpenseHandler} />
-      <Expenses expenses={expenses} />
+      <Expenses expenses={expenses} filterExpenses={filterExpenses} />
     </div>
   )
 }
