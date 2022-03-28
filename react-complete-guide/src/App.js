@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Expenses from './components/Expenses/Expenses'
 import NewExpense from './components/NewExpense/NewExpense'
 
@@ -29,23 +29,34 @@ const App = () => {
       date: new Date(2019, 0, 15),
     },
   ])
+  const [filteredExpenses, setFilteredExpenses] = useState([])
 
   const addExpenseHandler = (expense) => {
     setExpenses((prevState) => [...prevState, expense])
   }
 
   const filterExpenses = (year) => {
-    const filteredExpenses = expenses.filter((expense) => {
-      return expense.date.getFullYear() == year
-    })
+    if (year === 'ALL') {
+      console.log(year)
+      setFilteredExpenses(expenses)
+    } else {
+      console.log(year)
+      const filterExpenses = expenses.filter((expense) => {
+        return expense.date.getFullYear() == year
+      })
 
-    setExpenses(filteredExpenses)
+      setFilteredExpenses(filterExpenses)
+    }
   }
+
+  useEffect(() => {
+    setFilteredExpenses(expenses)
+  }, [expenses])
 
   return (
     <div>
       <NewExpense addExpenseHandler={addExpenseHandler} />
-      <Expenses expenses={expenses} filterExpenses={filterExpenses} />
+      <Expenses expenses={filteredExpenses} filterExpenses={filterExpenses} />
     </div>
   )
 }
